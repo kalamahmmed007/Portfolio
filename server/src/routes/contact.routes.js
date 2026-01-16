@@ -1,10 +1,10 @@
 import express from "express";
+import { sendMessage, getMessages } from "../controllers/contact.controller.js";
+import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
-  console.log("📩 Contact message:", req.body);
-  res.json({ success: true, msg: "Message received" });
-});
+router.post("/", sendMessage);
+router.get("/", protect, getMessages);
 
 export default router;

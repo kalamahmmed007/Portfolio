@@ -1,45 +1,41 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import helmet from "helmet";
+import rateLimiter from "./middleware/rateLimiter.js";
+import { errorHandler } from "./middleware/error.js";
+import config from "./config/config.js";
+import connectDB from "./config/db.js";
 
-import connectDB from "./config/database.js";
+// Routes
+import authRoutes from "./routes/auth.routes.js";
+import projectRoutes from "./routes/project.routes.js";
+import skillRoutes from "./routes/skill.routes.js";
+import experienceRoutes from "./routes/experience.routes.js";
+import educationRoutes from "./routes/education.routes.js";
+import testimonialRoutes from "./routes/testimonial.routes.js";
+import blogRoutes from "./routes/blog.routes.js";
+import contactRoutes from "./routes/contact.routes.js";
+import uploadRoutes from "./routes/upload.routes.js";
 
-// routes
-import authRoutes from "./routes/authRoutes.js";
-import projectRoutes from "./routes/projectRoutes.js";
-import skillRoutes from "./routes/skillRoutes.js";
-import experienceRoutes from "./routes/experienceRoutes.js";
-import educationRoutes from "./routes/educationRoutes.js";
-import testimonialRoutes from "./routes/testimonialRoutes.js";
-import blogRoutes from "./routes/blogRoutes.js";
-import contactRoutes from "./routes/contactRoutes.js";
-import uploadRoutes from "./routes/uploadRoutes.js";
-
-// middlewares
-import errorHandler from "./middleware/errorHandler.js";
-
+// Initialize app
 const app = express();
 
-/* =========================
-   Database Connection
-========================= */
+// Connect DB
 connectDB();
 
-/* =========================
-   Global Middlewares
-========================= */
+// Middleware
 app.use(cors());
-app.use(express.json({ limit: "10mb" }));
+app.use(helmet());
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+app.use(rateLimiter);
 
-/* =========================
-   API Routes
-========================= */
-app.get("/", (req, res) => {
-  res.send("🔥 Portfolio Backend API is live");
-});
+// Base route
+app.get("/", (req, res) => res.send("🚀 Portfolio API running"));
 
+// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/skills", skillRoutes);
@@ -47,12 +43,10 @@ app.use("/api/experience", experienceRoutes);
 app.use("/api/education", educationRoutes);
 app.use("/api/testimonials", testimonialRoutes);
 app.use("/api/blogs", blogRoutes);
-app.use("/api/contact", contactRoutes);
+app.use("/api/messages", contactRoutes);
 app.use("/api/upload", uploadRoutes);
 
-/* =========================
-   Error Handler
-========================= */
+// Error handler
 app.use(errorHandler);
 
 export default app;
