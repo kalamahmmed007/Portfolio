@@ -9,7 +9,12 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter
+      future={{
+        v7_startTransition: true,       // Opt-in for concurrent transitions in v7
+        v7_relativeSplatPath: true      // Opt-in for relative splat path behavior
+      }}
+    >
       <AuthProvider>
         <ThemeProvider>
           <ToastProvider>

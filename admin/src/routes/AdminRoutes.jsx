@@ -5,6 +5,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 
 // Pages
 import Dashboard from "../pages/Dashboard";
+import Login from "../pages/Login";
 
 // Projects
 import ProjectsList from "../pages/Projects/ProjectsList";
@@ -50,7 +51,10 @@ import NotFound from "../pages/NotFound";
 const AdminRoutes = () => {
   return (
     <Routes>
-      {/* Wrap all admin pages inside DashboardLayout */}
+      {/* Public routes */}
+      <Route path="/login" element={<Login />} />
+
+      {/* Protected Admin routes */}
       <Route
         path="/"
         element={
@@ -103,12 +107,12 @@ const AdminRoutes = () => {
         <Route path="analytics" element={<Analytics />} />
         <Route path="files" element={<FileManager />} />
 
-        {/* Catch-all 404 */}
+        {/* Catch-all 404 inside dashboard */}
         <Route path="*" element={<NotFound />} />
       </Route>
 
-      {/* Redirect root / to dashboard */}
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      {/* Catch-all redirect for non-admin/public paths */}
+      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 };

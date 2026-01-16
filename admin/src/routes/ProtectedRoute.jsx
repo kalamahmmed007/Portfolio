@@ -1,16 +1,22 @@
 // src/routes/ProtectedRoute.jsx
 import React from "react";
-import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { Navigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 
 const ProtectedRoute = ({ children }) => {
-  const { user, loading } = useAuth();
+  const { user, loading } = useAuth(); // get user info from AuthContext
+  const location = useLocation();
 
-  if (loading) return <div>Loading...</div>; // optional loading screen
+  // Show nothing while checking auth (optional: add a spinner)
+  if (loading) return null;
 
-  if (!user) return <Navigate to="/admin/login" replace />;
+  // If no user, redirect to login
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
 
+  // User is authenticated, render children
   return children;
 };
 
-export default ProtectedRoute; // ✅ default export
+export default ProtectedRoute;
