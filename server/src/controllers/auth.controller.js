@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
 
+
 export const login = async (req, res) => {
   const { email, password } = req.body;
 

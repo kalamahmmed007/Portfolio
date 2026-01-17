@@ -12,7 +12,7 @@ const MessagesList = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await api.get("/messages");
+        const res = await api.get("/contacts");
         setMessages(res.data);
       } catch (err) {
         console.error(err);

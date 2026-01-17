@@ -14,6 +14,7 @@ import skillRoutes from "./routes/skill.routes.js";
 import experienceRoutes from "./routes/experience.routes.js";
 import educationRoutes from "./routes/education.routes.js";
 import testimonialRoutes from "./routes/testimonial.routes.js";
+import analyticsRoutes from "./routes/analytics.routes.js";
 import blogRoutes from "./routes/blog.routes.js";
 import contactRoutes from "./routes/contact.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
@@ -44,6 +45,7 @@ app.use("/api/education", educationRoutes);
 app.use("/api/testimonials", testimonialRoutes);
 app.use("/api/blogs", blogRoutes);
 app.use("/api/messages", contactRoutes);
+app.use("/api/analytics", analyticsRoutes);
 app.use("/api/upload", uploadRoutes);
 
 // Error handler
